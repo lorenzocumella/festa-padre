@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Il miglior papà del mondo</title>
+
+<style>
+
+/* ADATTAMENTO PC */
+@media (min-width:900px){
+
+h1{
+    font-size:3rem;
+}
+
+p{
+    font-size:1.3rem;
+}
+
+img{
+    width:600px;
+    height:600px;
+}
+
+}
+
+body{
+    margin:0;
+    font-family:system-ui;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    text-align:center;
+    color:white;
+
+    /* sfondo animato colorato */
+    background:linear-gradient(
+        135deg,
+        #1e3c72,
+        #2a5298,
+        #ff7e5f,
+        #feb47b,
+        #43cea2,
+        #185a9d
+    );
+
+    background-size:400% 400%;
+    animation:sfondo 15s ease infinite;
+}
+
+@keyframes sfondo{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+h1{
+    font-size:8vw;
+    margin:10px 5%;  /* spazio a destra e sinistra */
+    animation:pulse 2s infinite alternate;
+    text-align:center;
+}
+
+p{
+    opacity:0.95;
+    margin-bottom:20px;
+    font-size:4vw;
+}
+
+/* FOTO */
+img{
+    width:90vw;
+    max-width:600px;
+    height:65vh;
+    max-height:600px;
+    object-fit:contain;
+
+    transition:opacity 1s ease-in-out, transform 5s ease-in-out;
+}
+
+/* animazione titolo */
+@keyframes pulse{
+    from{transform:scale(1);}
+    to{transform:scale(1.05);}
+}
+
+/* elementi che cadono */
+.animElem{
+    position:fixed;
+    top:-50px;
+    animation:fall linear forwards;
+    pointer-events:none;
+    user-select:none;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(-50px) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+p#messaggio{
+    white-space: nowrap;
+    font-size:4vw; /* o regola come vuoi */
+}
+</style>
+</head>
+
+<body>
+
+<h1>Il miglior papà <br> del mondo</h1>
+
+<p id="messaggio">Ti voglio bene! ❤️</p>
+
+<img id="foto" src="foto/foto1.JPG">
+
+<script>
+
+/* FOTO */
+
+const immagini=[
+"foto/foto1.JPG",
+"foto/foto2.JPG",
+"foto/foto3.JPG",
+"foto/foto4.JPG",
+"foto/foto5.JPG",
+"foto/foto6.JPG",
+"foto/foto7.JPG",
+"foto/foto8.JPG",
+"foto/foto9.JPG",
+"foto/foto10.JPG",
+"foto/foto11.JPG",
+"foto/foto12.JPG",
+"foto/foto13.JPG",
+"foto/foto14.JPG",
+"foto/foto15.JPG",
+"foto/foto16.JPG",
+"foto/foto17.JPG",
+"foto/foto18.JPG"
+];
+
+const fotoEl=document.getElementById("foto");
+
+/* MESSAGGI */
+
+/* messaggi rotanti */
+const messaggi=[
+"Sei un papà speciale! ❤️",
+"Grazie per tutto quello che fai ❤️",
+"Un abbraccio enorme! ❤️",
+];
+
+let messIndex=0;
+const messEl=document.getElementById("messaggio");
+
+function cambiaMessaggio(){
+
+messEl.textContent=messaggi[messIndex];
+
+messIndex++;
+
+if(messIndex>=messaggi.length){
+messIndex=0;
+}
+
+}
+
+setInterval(cambiaMessaggio,4000);
+
+/* SLIDESHOW FOTO */
+
+function cambiaFoto(){
+
+let random=Math.floor(Math.random()*immagini.length);
+
+fotoEl.style.opacity=0;
+fotoEl.style.transform="scale(1.1)";
+
+setTimeout(()=>{
+
+fotoEl.src=immagini[random];
+
+fotoEl.style.opacity=1;
+fotoEl.style.transform="scale(1)";
+
+},500);
+
+}
+
+setInterval(cambiaFoto,3000);
+
+/* ELEMENTI CHE CADONO */
+
+function creaAnimazione(){
+
+const elem=document.createElement("div");
+
+elem.className="animElem";
+
+const tipo=Math.random();
+
+if(tipo<0.4){
+elem.textContent="❤️";
+}
+else if(tipo<0.7){
+elem.textContent="⭐";
+}
+else{
+elem.textContent="🎉";
+}
+
+elem.style.left=Math.random()*100+"vw";
+
+elem.style.fontSize=(Math.random()*2+1.5)+"rem";
+
+elem.style.color=`hsl(${Math.random()*360},80%,60%)`;
+
+elem.style.animationDuration=(Math.random()*3+3)+"s";
+
+document.body.appendChild(elem);
+
+setTimeout(()=>{elem.remove();},6000);
+
+}
+
+setInterval(creaAnimazione,300);
+
+</script>
+
+</body>
+</html>
